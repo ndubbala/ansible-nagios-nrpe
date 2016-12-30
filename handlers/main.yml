@@ -1,0 +1,6 @@
+---
+
+- name: "Restart NRPE agent"
+  service:
+    name: "{{ ansible_nagios_nrpe_daemon_name }}"
+    state: restarted

@@ -1,0 +1,6 @@
+---
+
+# The download file name and extension
+ansible_nagios_nrpe_download_file_name: "nrpe-{{ ansible_nagios_nrpe_version }}"
+ansible_nagios_nrpe_download_file_extension: "tar.gz"
+ansible_nagios_nrpe_download_file: "{{ ansible_nagios_nrpe_download_file_name }}.{{ ansible_nagios_nrpe_download_file_extension }}"

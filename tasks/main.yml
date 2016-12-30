@@ -1,0 +1,17 @@
+---
+
+- include_vars: "RedHat.yml"
+  when: ansible_os_family == 'RedHat'
+
+- name: "Register NRPE agent status"
+  command: "service {{ ansible_nagios_nrpe_daemon_name }} status"
+  register: nrpe_agent_status
+
+- name: "Register trigger if NRPE agent installation should be berformed"
+  set_fact:
+    nrpe_agent_install: "{{ nrpe_agent_status.rc != 0 and 'unrecognized service' in nrpe_agent_status.stderr }}"
+
+- include: install.yml
+  when: nrpe_agent_install
+
+- include: configure.yml

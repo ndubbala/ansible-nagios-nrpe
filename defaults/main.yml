@@ -1,0 +1,14 @@
+---
+
+# The NRPE version
+ansible_nagios_nrpe_version: "3.0.1"
+
+# The download URL containing the path where the {{ ansible_nagios_nrpe_download_file }} can be downloaded
+ansible_nagios_nrpe_download_url: "https://github.com/NagiosEnterprises/nrpe/releases/download/{{ ansible_nagios_nrpe_version }}"
+
+# The listen port for the NRPE agent
+ansible_nagios_nrpe_port: "5666"
+
+# Comma separates list of hosts/IPs allowed to call the NRPE agent.
+# Add the Nagios server to this list
+ansible_nagios_nrpe_source_hosts: "127.0.0.1"
