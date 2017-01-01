@@ -3,6 +3,7 @@
 # Packages needed in order to build NRPE from source,
 # to be removed after build completion
 ansible_nagios_nrpe_package_list_build:
+  - make
   - gcc
   - openssl-devel
 
@@ -10,16 +11,23 @@ ansible_nagios_nrpe_package_list_build:
 ansible_nagios_nrpe_package_list_run:
   - perl
   - glibc
+  - openssl
   - glibc-common
 
 # The working dir
-ansible_nagios_nrpe_working_dir: "/tmp"
+ansible_nagios_nrpe_working_dir: "/tmp/ansible-nagios-nrpe"
+
+# The Nagios installation path
+ansible_nagios_nrpe_nagios_path: "/usr/local/nagios"
 
 # The NRPE configuration file
-ansible_nagios_nrpe_config_file: "/usr/local/nagios/etc/nrpe.cfg"
+ansible_nagios_nrpe_config_file: "{{ ansible_nagios_nrpe_nagios_path }}/etc/nrpe.cfg"
 
 # The services file
 ansible_nagios_nrpe_services_file: "/etc/services"
 
 # The NRPE daemon name
 ansible_nagios_nrpe_daemon_name: "nrpe"
+
+# The NRPE check command
+ansible_nagios_nrpe_check_command: "{{ ansible_nagios_nrpe_nagios_path }}/libexec/check_nrpe"

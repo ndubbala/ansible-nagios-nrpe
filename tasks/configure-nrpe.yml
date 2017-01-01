@@ -10,6 +10,8 @@
   register: service_file_config
   notify:
     - Restart NRPE agent
+    - Run NRPE check
+    - Assert NRPE check was successful
 
 - name: "NRPE config: Update hosts allowed to call the NRPE agent"
   replace:
@@ -18,6 +20,8 @@
     regexp: 'allowed_hosts=\s*([^\n\r]*)'
   notify:
     - Restart NRPE agent
+    - Run NRPE check
+    - Assert NRPE check was successful
 
 - name: "NRPE config: Allow client to specify arguments"
   replace:
@@ -26,6 +30,8 @@
     regexp: 'dont_blame_nrpe=\s*([^\n\r]*)'
   notify:
     - Restart NRPE agent
+    - Run NRPE check
+    - Assert NRPE check was successful
 
 - name: "Ensure the NRPE daemon starts after reboot"
   service:

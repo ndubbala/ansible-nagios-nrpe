@@ -12,3 +12,6 @@ ansible_nagios_nrpe_port: "5666"
 # Comma separates list of hosts/IPs allowed to call the NRPE agent.
 # Add the Nagios server to this list
 ansible_nagios_nrpe_source_hosts: "127.0.0.1"
+
+# Allows to force a re-installation
+ansible_nagios_nrpe_reinstall_force: false

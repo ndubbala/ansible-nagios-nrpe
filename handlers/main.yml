@@ -4,3 +4,14 @@
   service:
     name: "{{ ansible_nagios_nrpe_daemon_name }}"
     state: restarted
+
+- name: "Run NRPE check"
+  shell: "{{ ansible_nagios_nrpe_check_command }} -H 127.0.0.1"
+  register: nrpe_check_result
+  changed_when: False
+
+- name: "Assert NRPE check was successful"
+  assert:
+    that:
+      - "nrpe_check_result.rc == 0"
+      - "'NRPE v{{ ansible_nagios_nrpe_version }}' in nrpe_check_result.stdout"
