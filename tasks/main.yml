@@ -3,15 +3,15 @@
 - include_vars: "RedHat.yml"
   when: ansible_os_family == 'RedHat'
 
-- name: "Register NRPE agent status"
-  command: "service {{ ansible_nagios_nrpe_daemon_name }} status"
-  register: nrpe_agent_status
+- name: "Retrieve currently installed version"
+  shell: "grep nagios_plugins_version= {{ ansible_nagios_plugins_nagios_path }}/nagios-plugins.version | cut -d'=' -f2-"
+  register: nagios_plugins_version_installed
+  changed_when: False
+  ignore_errors: yes
 
-- name: "Register trigger if NRPE agent installation should be berformed"
+- name: "Register trigger if Nagios plugins installation should be berformed"
   set_fact:
-    nrpe_agent_install: "{{ nrpe_agent_status.rc != 0 and 'unrecognized service' in nrpe_agent_status.stderr }}"
+    nagios_plugins_install: ansible_nagios_plugins_reinstall_force or nagios_plugins_version_installed.stdout != "{{ ansible_nagios_plugins_version }}"
 
-- include: install.yml
-  when: nrpe_agent_install
-
-- include: configure.yml
+- include: install-plugins.yml
+  when: nagios_plugins_install
