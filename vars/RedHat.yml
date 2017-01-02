@@ -1,30 +1,33 @@
 ---
 
-# Packages needed in order to build Nagios plugins from source,
+# Packages needed in order to build NRPE from source,
 # to be removed after build completion
-ansible_nagios_plugins_package_list_build:
-  - gcc
-  - gd
-  - gd-devel
+ansible_nagios_nrpe_package_list_build:
   - make
-  - automake
-  - autoconf
+  - gcc
+  - openssl-devel
 
-# Packages needed in order to run the Nagios plugins
-ansible_nagios_plugins_package_list_run:
+# Packages needed in order to run NRPE
+ansible_nagios_nrpe_package_list_run:
+  - perl
   - glibc
+  - openssl
   - glibc-common
-  - net-snmp
-  - m4
-  - gettext
-  - wget
-  - gettext
 
 # The working dir
-ansible_nagios_plugins_working_dir: "/tmp/ansible-nagios-plugins"
+ansible_nagios_nrpe_working_dir: "/tmp/ansible-nagios-nrpe"
 
 # The Nagios installation path
-ansible_nagios_plugins_nagios_path: "/usr/local/nagios"
+ansible_nagios_nrpe_nagios_path: "/usr/local/nagios"
 
-# The NRPE plugins check command
-ansible_nagios_plugins_check_command: "{{ ansible_nagios_plugins_nagios_path_libexec }}/check_nrpe"
+# The NRPE configuration file
+ansible_nagios_nrpe_config_file: "{{ ansible_nagios_nrpe_nagios_path }}/etc/nrpe.cfg"
+
+# The services file
+ansible_nagios_nrpe_services_file: "/etc/services"
+
+# The NRPE daemon name
+ansible_nagios_nrpe_daemon_name: "nrpe"
+
+# The NRPE check command
+ansible_nagios_nrpe_check_command: "{{ ansible_nagios_nrpe_nagios_path }}/libexec/check_nrpe"

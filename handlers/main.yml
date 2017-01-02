@@ -1,12 +1,17 @@
 ---
 
-- name: "Run NRPE plugin check"
-  shell: "{{ ansible_nagios_nrpe_check_command }} -H 127.0.0.1 -c check_load"
-  register: nrpe_plugin_check_result
+- name: "Restart NRPE agent"
+  service:
+    name: "{{ ansible_nagios_nrpe_daemon_name }}"
+    state: restarted
+
+- name: "Run NRPE check"
+  shell: "{{ ansible_nagios_nrpe_check_command }} -H 127.0.0.1"
+  register: nrpe_check_result
   changed_when: False
 
-- name: "Assert NRPE plugin check was successful"
+- name: "Assert NRPE check was successful"
   assert:
     that:
-      - "nrpe_plugin_check_result.rc == 0"
-      - "'OK - load average' in nrpe_plugin_check_result.stdout"
+      - "nrpe_check_result.rc == 0"
+      - "'NRPE v{{ ansible_nagios_nrpe_version }}' in nrpe_check_result.stdout"
