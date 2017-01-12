@@ -1,0 +1,24 @@
+# {{ ansible_managed }}
+
+log_facility=daemon
+debug=0
+pid_file={{ ansible_nagios_nrpe_nagios_path }}/var/nrpe.pid
+server_port={{ ansible_nagios_nrpe_port }}
+{% if ansible_nagios_nrpe_server_address %}
+server_address={{ ansible_nagios_nrpe_server_address }}
+{% endif %}
+nrpe_user={{ ansible_nagios_nrpe_nagios_user }}
+nrpe_group={{ ansible_nagios_nrpe_nagios_group }}
+allowed_hosts={{ ansible_nagios_nrpe_source_hosts }}
+dont_blame_nrpe=1
+allow_bash_command_substitution=0
+command_timeout=60
+connection_timeout=300
+
+# Available plugins
+command[check_remote_users]={{ ansible_nagios_nrpe_nagios_path }}/libexec/check_users -w $ARG1$ -c $ARG2$
+command[check_remote_load]={{ ansible_nagios_nrpe_nagios_path }}/libexec/check_load -w $ARG1$ -c $ARG2$
+command[check_remote_disk]={{ ansible_nagios_nrpe_nagios_path }}/libexec/check_disk -w $ARG1$ -c $ARG2$ -p $ARG3$
+command[check_remote_zombie]={{ ansible_nagios_nrpe_nagios_path }}/libexec/check_procs -w $ARG1$ -c $ARG2$ -s $ARG3$
+command[check_remote_procs]={{ ansible_nagios_nrpe_nagios_path }}/libexec/check_procs -w $ARG1$ -c $ARG2$
+command[check_remote_swap]={{ ansible_nagios_nrpe_nagios_path }}/libexec/check_swap $ARG1$

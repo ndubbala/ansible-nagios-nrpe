@@ -13,21 +13,10 @@
     - Run NRPE check
     - Assert NRPE check was successful
 
-- name: "NRPE config: Update hosts allowed to call the NRPE agent"
-  replace:
+- name: "Deploy NRPE configuration from template"
+  template:
+    src: "nrpe.cfg.j2"
     dest: "{{ ansible_nagios_nrpe_config_file }}"
-    replace: 'allowed_hosts={{ ansible_nagios_nrpe_source_hosts }}'
-    regexp: 'allowed_hosts=\s*([^\n\r]*)'
-  notify:
-    - Restart NRPE agent
-    - Run NRPE check
-    - Assert NRPE check was successful
-
-- name: "NRPE config: Allow client to specify arguments"
-  replace:
-    dest: "{{ ansible_nagios_nrpe_config_file }}"
-    replace: 'dont_blame_nrpe=1'
-    regexp: 'dont_blame_nrpe=\s*([^\n\r]*)'
   notify:
     - Restart NRPE agent
     - Run NRPE check

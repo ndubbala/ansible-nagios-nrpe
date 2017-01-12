@@ -13,5 +13,17 @@ ansible_nagios_nrpe_port: "5666"
 # Add the Nagios server to this list
 ansible_nagios_nrpe_source_hosts: "127.0.0.1"
 
+# The IP address NRPE should listen on, useful in case there are multiple
+# network interfaces and we only want to listen on the management interfaces
+# for instance.
+# As long as this var is not being specified, NRPE will listen on all interfaces
+ansible_nagios_nrpe_server_address: ""
+
+# The Nagios user
+ansible_nagios_nrpe_nagios_user: "nagios"
+
+# The Nagios group
+ansible_nagios_nrpe_nagios_group: "nagios"
+
 # Allows to force a re-installation
 ansible_nagios_nrpe_reinstall_force: false
